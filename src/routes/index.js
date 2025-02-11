@@ -7,6 +7,8 @@ const { request } = require('http');
 const { rejects } = require('assert');
 const { fstat } = require('fs');
 const ftp = require('../controllers/ftp')
+const Path = require('path')
+
 //const auth = require('./auth');
 
 module.exports.register = async server => {
@@ -44,16 +46,39 @@ module.exports.register = async server => {
 
     server.route({
         method: 'POST',
-        path: '/uploadFile',
+        path: '/uploadfile',
         options: {
-            payload: {
-                maxBytes:209715200,
-                parse: true,
+            payload: {                           
+                parse: false,
                 output: 'file',
+                multipart: true,
+                allow: 'multipart/form-data'
             },
-            handler: async (req, h) => {
-                console.log(req.payload);
-                return h.response(req.payload);
+            handler: async (request, h) => {                
+                const file = request.payload;
+                console.log('file',file)
+                const filename = file.path;                
+                console.log('filename',filename)
+                return h.view( 'index', 
+                    { title: 'Teste api GBS Arquivo',
+                    mensagem: 'versão: 1.0.0',
+                    dados: '',
+                    site: 'www.gbstec.com.br'
+                    });
+                // Save file to uploads folder
+                /*
+                const filePath = Path.join(__dirname, 'uploads', filename);
+                console.log('dirname', __dirname )
+                console.log('filePath', filePath )                
+                return new Promise((resolve, reject) => {
+                    file.pipe(require('fs').createWriteStream(filePath));
+                    file.on('end', (err) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        return resolve({ message: 'File uploaded successfully', filename: filename });
+                    });
+                });*/
             }
         }
     });

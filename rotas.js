@@ -5,7 +5,8 @@ var dados = [];
 
 const buscaRota = async () => {
     try {
-    return await axios.get('http://localhost:8080/Datasnap/rest/TdmAdmin/ApiAdmin/')
+    //return await axios.get('http://localhost:8080/Datasnap/rest/TdmAdmin/ApiAdmin/')
+    return await axios.get('http://186.202.42.3:8080/Datasnap/rest/TdmAdmin/ApiAdmin/')
     } catch (err) {
         console.log('erro:', err)
     }

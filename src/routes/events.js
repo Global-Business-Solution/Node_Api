@@ -17,7 +17,6 @@ module.exports.register = async server => {
   }
   
   const getRota = async() => {
-    console.log('ANTES events')
       const rot = await buscaRota()
       
       //console.log(rot.data);

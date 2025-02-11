@@ -21,6 +21,7 @@ const app = async config => {
 	server.app.config = config;
 
     await plugins.register( server );
+	await server.register( require('@hapi/inert') )
 	await routes.register( server );
 
 	return server;
